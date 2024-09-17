@@ -31,11 +31,20 @@ def main():
 
         if st.button("Send"):
             if user_question:
-                with st.spinner(text="In progress..."):
-                    answer = agent.run(user_question)
-                    st.session_state.chat_history.append((user_question, answer))
-                    st.session_state['input_question'] = ''
-                    st.experimental_rerun()
+                if csv_file and user_api_key:
+                    try:
+                        llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, openai_api_key=user_api_key)
+                        agent = create_csv_agent(llm, csv_file, agent_type="openai-tools", verbose=True, allow_dangerous_code=True)
+                        
+                        with st.spinner(text="In progress..."):
+                            answer = agent.run(user_question)
+                            st.session_state['chat_history'].append((user_question, answer))
+                            
+                            # Limpiar el campo de pregunta después de enviar
+                            st.session_state['input_question'] = ''
+                            st.experimental_rerun()  # Actualiza la aplicación para limpiar el campo de texto
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
         
         if st.session_state['chat_history']:
             st.write("### Chat History:")
