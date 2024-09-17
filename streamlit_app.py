@@ -19,8 +19,8 @@ def main():
     if 'chat_history' not in st.session_state:
         st.session_state['chat_history'] = []
     
-    if 'input_question' not in st.session_state:
-        st.session_state['input_question'] = ''
+    if 'user_question' not in st.session_state:
+        st.session_state['user_question'] = ''
     
     if csv_file is not None and user_api_key:
         llm = ChatOpenAI(model="gpt-4o", temperature=0, openai_api_key=user_api_key)
