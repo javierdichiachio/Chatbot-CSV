@@ -27,14 +27,14 @@ def main():
         
         agent = create_csv_agent(llm,csv_file,agent_type="openai-tools",verbose=True, allow_dangerous_code=True)
 
-        user_question = st.text_input("Ask a question about the LPs:", key="input_question")
+        user_question = st.text_input("Ask a question about the LPs:", value=st.session_state['user_question'])
 
         if st.button("Send"):
             if user_question:
                 with st.spinner(text="In progress..."):
                     answer = agent.run(user_question)
                     st.session_state.chat_history.append((user_question, answer))
-                    st.session_state.input_question = ''
+                    st.session_state['user_question'] = ''
         
         if st.session_state['chat_history']:
             st.write("### Chat History:")
