@@ -34,8 +34,7 @@ def main():
                 with st.spinner(text="In progress..."):
                     answer = agent.run(user_question)
                     st.session_state.chat_history.append((user_question, answer))
-            st.session_state['user_question'] = ''  # Clear the text input
-            st.rerun()
+                    st.session_state['user_question'] = ''  # Clear the text input
         
         if st.session_state['chat_history']:
             st.write("### Chat History:")
