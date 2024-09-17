@@ -30,7 +30,7 @@ def main():
         user_question = st.text_input("Ask a question about the LPs:", value=st.session_state['user_question'])
 
         def update_question():
-            st.session_state.user_question = ""
+            st.session_state['user_question'] = ""
         
         if st.button("Send", on_click=update_question):
             if user_question:
