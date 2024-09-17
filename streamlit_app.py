@@ -6,8 +6,8 @@ import streamlit as st
 def main():
     
     # Load the OpenAI API key from the environment variable
-    st.set_page_config(page_title="Ask your CSV")
-    st.header("Ask your CSV 📈")
+    st.set_page_config(page_title="Rebel ChatBot")
+    st.header("Rebel ChatBot 🤖")
     
     user_api_key = st.sidebar.text_input(
     label="#### Your OpenAI API key 👇",
@@ -27,7 +27,7 @@ def main():
         
         agent = create_csv_agent(llm,csv_file,agent_type="openai-tools",verbose=True, allow_dangerous_code=True)
 
-        user_question = st.text_input("Ask a question about the LPs:", value=st.session_state['user_question'])
+        user_question = st.text_input("Make your query about our LPs:", value=st.session_state['user_question'])
 
         if user_question:
             with st.spinner(text="In progress..."):
