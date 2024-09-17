@@ -29,10 +29,12 @@ def main():
 
         user_question = st.text_input("Ask a question about the LPs:", value=st.session_state['user_question'])
 
-        if user_question:
-            with st.spinner(text="In progress..."):
-                answer = agent.run(user_question)
-                st.session_state.chat_history.append((user_question, answer))
+        if st.button("Send"):
+            if user_question:
+                with st.spinner(text="In progress..."):
+                    answer = agent.run(user_question)
+                    st.session_state.chat_history.append((user_question, answer))
+                    st.session_state['user_question'] = ''  # Clear the text input
         
         if st.session_state['chat_history']:
             st.write("### Chat History:")
