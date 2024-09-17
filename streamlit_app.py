@@ -21,24 +21,21 @@ def main():
     
     if 'input_question' not in st.session_state:
         st.session_state['input_question'] = ''
-
-    question_container = st.container()
     
     if csv_file is not None and user_api_key:
         llm = ChatOpenAI(model="gpt-4o", temperature=0, openai_api_key=user_api_key)
         
         agent = create_csv_agent(llm,csv_file,agent_type="openai-tools",verbose=True, allow_dangerous_code=True)
 
-        with question_container:
-            user_question = st.text_input("Ask a question about the LPs:", value=st.session_state['input_question'], key='input_question')
+        user_question = st.text_input("Ask a question about the LPs:", value=st.session_state['input_question'], key='input_question')
 
-            if st.button("Send"):
-                if user_question:
-                    with st.spinner(text="In progress..."):
-                        answer = agent.run(user_question)
-                        st.session_state.chat_history.append((user_question, answer))
-                        st.session_state['input_question'] = ''
-                        st.experimental_rerun()
+        if st.button("Send"):
+            if user_question:
+                with st.spinner(text="In progress..."):
+                    answer = agent.run(user_question)
+                    st.session_state.chat_history.append((user_question, answer))
+                    st.session_state['input_question'] = ''
+                    st.experimental_rerun()
         
         if st.session_state['chat_history']:
             st.write("### Chat History:")
