@@ -27,6 +27,7 @@ def main():
         
         agent = create_csv_agent(llm,csv_file,agent_type="openai-tools",verbose=True, allow_dangerous_code=True)
 
+        input_container = st.empty()
         user_question = st.text_input("Ask a question about the LPs:", value=st.session_state['input_question'], key='input_question')
 
         if st.button("Send"):
@@ -38,7 +39,8 @@ def main():
                         
                         # Limpiar el campo de pregunta después de enviar
                         st.session_state['input_question'] = ''
-                        # Aquí no es necesario usar st.experimental_rerun(), ya que el estado de sesión se actualiza automáticamente.
+                        # Actualizar el contenedor temporal para limpiar el campo de texto
+                        input_container.empty()
                 except Exception as e:
                     st.error(f"An error occurred: {e}")
 
